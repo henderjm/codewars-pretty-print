@@ -26,7 +26,8 @@ class TestBuilder
               write_it(:passed_it, message)
             elsif tag[0].start_with?("<FAILED")
               @failed_tests += 1
-              write_it(:failed_it, message)
+              # write_it(:failed_it, message)
+              ''
             else
               ''
             end
