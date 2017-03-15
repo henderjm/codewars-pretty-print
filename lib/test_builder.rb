@@ -13,33 +13,30 @@ class TestBuilder
   private
 
   def to_html(output)
-    if output.nil?
-      'No test results to show'
-    else
-      output.split("<:LF:>").each do |value|
-        tag = value.split("::>")
-        message = tag[1]
-        x = if tag[0].start_with?("<DESCRIBE")
-              write_desribe(message)
-            elsif tag[0].start_with?("<PASSED")
-              @passed_tests += 1
-              write_it(:passed_it, message)
-            elsif tag[0].start_with?("<FAILED")
-              @failed_tests += 1
-              # write_it(:failed_it, message)
-              ''
-            else
-              ''
-            end
-      end
+    raise `'No test results to show'` if output.nil?
+    output.split("<:LF:>").each do |value|
+      tag = value.split("::>")
+      message = tag[1]
+      x = if tag[0].start_with?("<DESCRIBE")
+            write_desribe(message)
+          elsif tag[0].start_with?("<PASSED")
+            @passed_tests += 1
+            write_it(:'it.passed', message)
+          elsif tag[0].start_with?("<FAILED")
+            @failed_tests += 1
+            write_it(:'it.failed', message)
+          else
+            ''
+          end
     end
   end
 
   def write_it(symbol, message)
     block = []
+    tag = symbol.to_s == 'it.passed' ? 'Passed' : 'Failed:'
     block << "<br>"
     block << "<div class=\"#{symbol}\">"
-    block << "<h3>Passed: </h3> #{message}"
+    block << "<h3>#{tag} </h3> #{message}"
     block << '</div>'
     @html << block
   end

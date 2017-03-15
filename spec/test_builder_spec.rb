@@ -39,9 +39,15 @@ RSpec.describe 'test_builder' do
           expect(builder.html.size).to eq(11)
         end
 
-        it 'should print a #passed test in a div' do
+        it 'should print a #passed test in a passed div' do
           complete_html = builder.html[1].join("\n")
-          expect(complete_html).to eq("<br>\n<div class=\"passed_it\">\n<h3>Passed: </h3> Test Passed: Value == 3\n</div>")
+          expect(complete_html).to eq("<br>\n<div class=\"it.passed\">\n<h3>Passed: </h3> Test Passed: Value == 3\n</div>")
+        end
+
+        it 'should print a #failed test in a failed div' do
+          complete_html = builder.html[2].join("\n")
+          puts builder.html
+          expect(complete_html).to eq("<br>\n<div class=\"it.failed\">\n<h3>Failed: </h3> Expected: 1, instead got: 3\n</div>")
         end
       end
     end
