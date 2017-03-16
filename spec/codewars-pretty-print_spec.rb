@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../lib/test_builder'
+require_relative '../lib/codewars-pretty-print'
 
 RSpec.describe 'test_builder' do
   let(:mock_results) { mock_test_result }
@@ -15,7 +15,7 @@ RSpec.describe 'test_builder' do
     let(:mock_results) { nil }
 
     it 'should render page with no results' do
-      expect(builder.html).to be_empty
+      expect { builder }.to raise_error('No test results to show')
     end
   end
 
@@ -46,7 +46,6 @@ RSpec.describe 'test_builder' do
 
         it 'should print a #failed test in a failed div' do
           complete_html = builder.html[2].join("\n")
-          puts builder.html
           expect(complete_html).to eq("<br>\n<div class=\"it.failed\">\n<h3>Failed: </h3> Expected: 1, instead got: 3\n</div>")
         end
       end

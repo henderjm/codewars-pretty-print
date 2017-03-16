@@ -13,7 +13,7 @@ class TestBuilder
   private
 
   def to_html(output)
-    raise `'No test results to show'` if output.nil?
+    raise 'No test results to show' if output.nil?
     output.split("<:LF:>").each do |value|
       tag = value.split("::>")
       message = tag[1]
@@ -33,7 +33,7 @@ class TestBuilder
 
   def write_it(symbol, message)
     block = []
-    tag = symbol.to_s == 'it.passed' ? 'Passed' : 'Failed:'
+    tag = symbol.to_s == 'it.passed' ? 'Passed:' : 'Failed:'
     block << "<br>"
     block << "<div class=\"#{symbol}\">"
     block << "<h3>#{tag} </h3> #{message}"
